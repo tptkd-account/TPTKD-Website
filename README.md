@@ -35,6 +35,8 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+When pulling from github run: npm install
+This will install all the dependencies listed here:
 
 Framework:
 NextJS
@@ -49,7 +51,6 @@ NeonDB
 Upstash
 
 FrontEnd:
-Toast
 ShadCN
 
 Email Sending + Notify:
