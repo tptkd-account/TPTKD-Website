@@ -1,4 +1,4 @@
-import { PrismaClient } from "@/generated/prisma/client"; 
+import { PrismaClient } from "@/generated/prisma/client"
 import { PrismaNeon } from "@prisma/adapter-neon"; 
 
 const globalForPrisma = global as unknown as {
@@ -13,4 +13,4 @@ const prisma =
     adapter, 
   }); 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma; 
-export default prisma; 
+export default prisma;
