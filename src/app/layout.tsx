@@ -11,8 +11,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html className={cn("font-sans", inter.variable)}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={cn("font-sans [scrollbar-gutter:stable]", inter.variable)}>
+      <body>
+        <div>
+          <header>
+
+          </header>
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

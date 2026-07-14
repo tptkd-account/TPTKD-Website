@@ -11,6 +11,8 @@ datasource db {
 model User {
   id            String    @id
   name          String
+  adminNumber   String    @unique
+  phoneNumber   Int       @unique
   email         String
   emailVerified Boolean   @default(false)
   image         String?
@@ -69,4 +71,8 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum Grade {
+  White
 }
