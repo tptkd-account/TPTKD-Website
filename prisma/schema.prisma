@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma/client"
@@ -9,89 +8,68 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(uuid())
+  id                String      @id @default(uuid())
   name              String
-  adminNumber       String    @unique
-  phoneNumber       Int       @unique
+  adminNumber       String      @unique
+  phoneNumber       String      @unique
   email             String
-  emailVerified     Boolean   @default(false)
+  emailVerified     Boolean     @default(false)
   image             String?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
   medicalConditions String?
   grade             Grade
   currentYear       CurrentYear
-  role              Role  
+  role              Role
   userEvents        UserEvent[]
   sessions          Session[]
   accounts          Account[]
-
 
   @@unique([email])
   @@map("user")
 }
 
 model UserEvent {
-  id       String   @id @default(uuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  eventId           String
-  clockIn           DateTime?
-  clockOut          DateTime?
-  latitude          Decimal?
-  longitude         Decimal?
-  userNotification  String?  
-  status            Status
+  id               String    @id @default(uuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId          String
+  event            Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  clockIn          DateTime?
+  clockOut         DateTime?
+  latitude         Decimal?
+  longitude        Decimal?
+  userNotification String?
+  status           Status
+
+  @@index([userId])
+  @@index([eventId])
+  @@map("UserEvent")
 }
 
-model Events  {
-  id          String   @id @default(uuid())
+model Event {
+  id                String      @id @default(uuid())
   eventTypeId       String
-  eventType         EventType @relation(fields: [eventTypeId], references: [id])
+  eventType         EventType   @relation(fields: [eventTypeId], references: [id])
   startDateTime     DateTime
   endDateTime       DateTime
   location          String
   eventNotification String?
   eventStatus       EventStatus
+  userEvents        UserEvent[]
+
+  @@index([eventTypeId])
+  @@map("Event")
 }
 
- model EventType {
-  id          String   @id @default(uuid())
+model EventType {
+  id          String  @id @default(uuid())
   name        String
   description String?
-  events      Events[]
- }
+  events      Event[]
 
-model UserEvent {
-  id       String   @id @default(uuid())
-  userId            String
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  eventId           String
-  clockIn           DateTime?
-  clockOut          DateTime?
-  latitude          Decimal?
-  longitude         Decimal?
-  userNotification  String?  
-  status            Status
+  @@map("EventType")
 }
-
-model Events  {
-  id          String   @id @default(uuid())
-  eventTypeId       String
-  eventType         EventType @relation(fields: [eventTypeId], references: [id])
-  startDateTime     DateTime
-  endDateTime       DateTime
-  location          String
-  eventNotification String?
-  eventStatus       EventStatus
-}
-
- model EventType {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  events      Events[]
- }
 
 model Session {
   id        String   @id
@@ -141,7 +119,7 @@ model Verification {
   @@map("verification")
 }
 
-enum Grade  {
+enum Grade {
   W10
   W9
   Y8
@@ -180,7 +158,7 @@ enum Status {
   MC
 }
 
-enum EventStatus{
+enum EventStatus {
   Upcoming
   Ongoing
   Cancelled

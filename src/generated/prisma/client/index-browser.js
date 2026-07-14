@@ -123,11 +123,45 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  adminNumber: 'adminNumber',
+  phoneNumber: 'phoneNumber',
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  medicalConditions: 'medicalConditions',
+  grade: 'grade',
+  currentYear: 'currentYear',
+  role: 'role'
+};
+
+exports.Prisma.UserEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  eventId: 'eventId',
+  clockIn: 'clockIn',
+  clockOut: 'clockOut',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  userNotification: 'userNotification',
+  status: 'status'
+};
+
+exports.Prisma.EventScalarFieldEnum = {
+  id: 'id',
+  eventTypeId: 'eventTypeId',
+  startDateTime: 'startDateTime',
+  endDateTime: 'endDateTime',
+  location: 'location',
+  eventNotification: 'eventNotification',
+  eventStatus: 'eventStatus'
+};
+
+exports.Prisma.EventTypeScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
 };
 
 exports.Prisma.SessionScalarFieldEnum = {
@@ -180,10 +214,60 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Grade = exports.$Enums.Grade = {
+  W10: 'W10',
+  W9: 'W9',
+  Y8: 'Y8',
+  Y7: 'Y7',
+  G6: 'G6',
+  G5: 'G5',
+  B4: 'B4',
+  B3: 'B3',
+  R2: 'R2',
+  R1: 'R1',
+  Dan: 'Dan'
+};
 
+exports.CurrentYear = exports.$Enums.CurrentYear = {
+  PFP: 'PFP',
+  Y1: 'Y1',
+  Y2: 'Y2',
+  Y3: 'Y3',
+  Y4: 'Y4',
+  PartTime: 'PartTime',
+  Alumni: 'Alumni',
+  Others: 'Others'
+};
+
+exports.Role = exports.$Enums.Role = {
+  Admin: 'Admin',
+  Coach: 'Coach',
+  Exco: 'Exco',
+  Student: 'Student'
+};
+
+exports.Status = exports.$Enums.Status = {
+  Attended: 'Attended',
+  Late: 'Late',
+  Absent: 'Absent',
+  MC: 'MC'
+};
+
+exports.EventStatus = exports.$Enums.EventStatus = {
+  Upcoming: 'Upcoming',
+  Ongoing: 'Ongoing',
+  Cancelled: 'Cancelled',
+  StartEarly: 'StartEarly',
+  StartLate: 'StartLate',
+  EndEarly: 'EndEarly',
+  EndLate: 'EndLate'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
+  UserEvent: 'UserEvent',
+  Event: 'Event',
+  EventType: 'EventType',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'

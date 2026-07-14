@@ -8,18 +8,67 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id                String      @id @default(uuid())
+  name              String
+  adminNumber       String      @unique
+  phoneNumber       String      @unique
+  email             String
+  emailVerified     Boolean     @default(false)
+  image             String?
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  medicalConditions String?
+  grade             Grade
+  currentYear       CurrentYear
+  role              Role
+  userEvents        UserEvent[]
+  sessions          Session[]
+  accounts          Account[]
 
   @@unique([email])
   @@map("user")
+}
+
+model UserEvent {
+  id               String    @id @default(uuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId          String
+  event            Event     @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  clockIn          DateTime?
+  clockOut         DateTime?
+  latitude         Decimal?
+  longitude        Decimal?
+  userNotification String?
+  status           Status
+
+  @@index([userId])
+  @@index([eventId])
+  @@map("UserEvent")
+}
+
+model Event {
+  id                String      @id @default(uuid())
+  eventTypeId       String
+  eventType         EventType   @relation(fields: [eventTypeId], references: [id])
+  startDateTime     DateTime
+  endDateTime       DateTime
+  location          String
+  eventNotification String?
+  eventStatus       EventStatus
+  userEvents        UserEvent[]
+
+  @@index([eventTypeId])
+  @@map("Event")
+}
+
+model EventType {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  events      Event[]
+
+  @@map("EventType")
 }
 
 model Session {
@@ -68,4 +117,53 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+enum Grade {
+  W10
+  W9
+  Y8
+  Y7
+  G6
+  G5
+  B4
+  B3
+  R2
+  R1
+  Dan
+}
+
+enum CurrentYear {
+  PFP
+  Y1
+  Y2
+  Y3
+  Y4
+  PartTime
+  Alumni
+  Others
+}
+
+enum Role {
+  Admin
+  Coach
+  Exco
+  Student
+}
+
+enum Status {
+  Attended
+  Late
+  Absent
+  MC
+}
+
+enum EventStatus {
+  Upcoming
+  Ongoing
+  Cancelled
+  StartEarly
+  StartLate
+  EndEarly
+  EndLate
 }
