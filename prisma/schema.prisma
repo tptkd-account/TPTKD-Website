@@ -62,6 +62,37 @@ model Events  {
   events      Events[]
  }
 
+model UserEvent {
+  id       String   @id @default(uuid())
+  userId            String
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId           String
+  clockIn           DateTime?
+  clockOut          DateTime?
+  latitude          Decimal?
+  longitude         Decimal?
+  userNotification  String?  
+  status            Status
+}
+
+model Events  {
+  id          String   @id @default(uuid())
+  eventTypeId       String
+  eventType         EventType @relation(fields: [eventTypeId], references: [id])
+  startDateTime     DateTime
+  endDateTime       DateTime
+  location          String
+  eventNotification String?
+  eventStatus       EventStatus
+}
+
+ model EventType {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  events      Events[]
+ }
+
 model Session {
   id        String   @id
   expiresAt DateTime
